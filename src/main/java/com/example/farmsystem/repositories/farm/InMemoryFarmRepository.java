@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 
+@Repository
 public class InMemoryFarmRepository implements FarmRepository {
 
     private final HashMap<String, Farm> farmHashMap = new HashMap<>();
