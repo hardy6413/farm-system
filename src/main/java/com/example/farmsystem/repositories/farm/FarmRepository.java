@@ -8,7 +8,9 @@ import java.util.Optional;
 @Repository
 public interface FarmRepository {
 
-    public Optional<Farm> findById(String uuid);
+    Optional<Farm> findById(String uuid);
+
+    Farm save(Farm farm);
 
 
 }

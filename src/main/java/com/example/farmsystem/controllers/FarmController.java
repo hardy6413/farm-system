@@ -16,7 +16,7 @@ public class FarmController {
 
     @GetMapping()
     public ResponseEntity<?> getFarm(){
-        farmService.getFarm("12");
+        farmService.findById("12");
         return ResponseEntity.ok("implement getting farm for logged in user");
     }
 }
