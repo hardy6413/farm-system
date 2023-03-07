@@ -1,28 +1,33 @@
 package com.example.farmsystem.services
 
-import com.example.farmsystem.domain.models.Farm
+
+import com.example.farmsystem.domain.requests.CreateFarmRequest
+import com.example.farmsystem.repositories.farm.FarmRepository
 import com.example.farmsystem.repositories.farm.InMemoryFarmRepository
-import org.junit.jupiter.api.BeforeEach
 import spock.lang.Specification
 
 class FarmServiceTest extends Specification {
-    FarmService farmService;
+    FarmService farmService
+    FarmRepository farmRepository
 
-    @BeforeEach
     void setup() {
-        farmService = new FarmService(new InMemoryFarmRepository())
+        farmRepository = new InMemoryFarmRepository()
+        farmService = new FarmService(farmRepository)
     }
 
-    def "should save and find farm in database"() {
+    def "should create and find farm"() {
         given:"farm"
-        def farm = new Farm("test farm", "city", "street", "123/a")
+        def farm = new CreateFarmRequest("test farm", "city", "street", "123/a")
 
-        when: "farm is saved"
-        farmService.save(farm)
+        when: "farm is created"
+        def savedFarm = farmService.createFarm(farm)
 
-        then: "created farm is saved and can be found"
-        def foundFarm = farmService.findById(farm.getId())
+        then: "farm is saved and can be queried"
+        def foundFarm = farmService.findById(savedFarm.getId())
 
-        assert foundFarm == farm
+        assert foundFarm.getName() == farm.name()
+        assert foundFarm.getCity() == farm.city()
+        assert foundFarm.getStreet() == farm.street()
+        assert foundFarm.getBuildingNumber() == farm.buildingNumber()
     }
 }
