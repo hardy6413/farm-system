@@ -12,7 +12,7 @@ public class DbConfig {
 
 
     @Bean
-    @ConditionalOnProperty(name = "spring.profiles.active", havingValue = "inmemory")
+    @ConditionalOnProperty(name = "spring.profiles.active", havingValue = "inmemory", matchIfMissing = true)
     public FarmService inMemoryFarmService(InMemoryFarmRepository farmRepository){
         return new FarmService(farmRepository);
     }
